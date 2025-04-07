@@ -9,16 +9,23 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from GitHub
+                echo "Checking out the code from GitHub"
                 checkout scm
-                echo "Checked out code from GitHub."
+            }
+        }
+
+        stage('Verify Docker Installation') {
+            steps {
+                echo "Verifying Docker Installation..."
+                sh 'docker --version'
             }
         }
 
         stage('Build Docker Image') {
             steps {
+                echo "Building Docker Image"
                 script {
-                    echo "Building Docker Image..."
+                    // Build the Docker image
                     sh 'docker build -t my-c-python-project .'
                 }
             }
@@ -26,19 +33,18 @@ pipeline {
 
         stage('Run Tests') {
             steps {
+                echo "Running Tests"
                 script {
-                    echo "Running Tests..."
-                    sh 'docker run my-c-python-project python3 test.py'
-                    echo "Displaying Docker Logs..."
-                    sh 'docker logs $(docker ps -lq)'  // Get logs of the most recent container
+                    // Run the container and execute tests
+                    sh 'docker run my-c-python-project'
                 }
             }
         }
 
         stage('Push Docker Image') {
             steps {
+                echo "Pushing Docker Image to Docker Hub"
                 script {
-                    echo "Pushing Docker image to Docker Hub..."
                     // Login to Docker Hub using credentials stored in Jenkins
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                     // Tag the image with the Docker Hub repository name
