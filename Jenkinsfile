@@ -1,9 +1,14 @@
-stage('Check Docker Access') {
-    steps {
-        script {
-            echo "Checking Docker version..."
-            sh 'docker --version'  // Check Docker version
-            echo "Docker version checked"
+pipeline {
+    agent any
+    stages {
+        stage('Check Docker') {
+            steps {
+                script {
+                    // Full path to Docker executable
+                    echo "Checking Docker version..."
+                    sh '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" --version'
+                }
+            }
         }
     }
 }
