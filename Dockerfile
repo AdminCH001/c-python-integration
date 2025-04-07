@@ -24,5 +24,10 @@ RUN gcc -o main main.c
 # Install Python dependencies (if any)
 RUN pip3 install -r requirements.txt
 
+# Set executable permissions for the compiled C program
+RUN chmod +x main
+
+RUN ls -la /app
+
 # Run the Python test script
 CMD ["python3", "test.py"]

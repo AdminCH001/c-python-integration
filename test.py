@@ -12,6 +12,6 @@ def test_mul():
 
 
 if __name__ == "__main__":
-    #test_add()
+    test_add()
     test_mul()
     print("Test passed!")

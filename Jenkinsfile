@@ -29,9 +29,10 @@ pipeline {
                 // Run tests inside the Docker container
                 script {
                     // Run the container and execute tests
-                    sh 'docker run my-c-python-project'
-                   // Add this line to print container logs if needed
-                   sh 'docker logs $(docker ps -lq)'
+                    // sh 'docker run my-c-python-project'
+                    sh 'docker run my-c-python-project python3 -m unittest discover -v'
+                    // Add this line to print container logs if needed
+                    sh 'docker logs $(docker ps -lq)'
                    
                 }
             }
