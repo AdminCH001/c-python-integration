@@ -11,14 +11,14 @@ pipeline {
             steps {
                 // Checkout the code from GitHub
                 checkout scm
+                echo "Checked out code from GitHub."
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image
                 script {
-                    // Build the Docker image with the tag 'my-c-python-project'
+                    echo "Building Docker Image..."
                     sh 'docker build -t my-c-python-project .'
                 }
             }
@@ -26,22 +26,19 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                // Run tests inside the Docker container
                 script {
-                    // Run the container and execute tests
-                    // sh 'docker run my-c-python-project'
-                    sh 'docker run my-c-python-project python3 -m unittest discover -v'
-                    // Add this line to print container logs if needed
-                    sh 'docker logs $(docker ps -lq)'
-                   
+                    echo "Running Tests..."
+                    sh 'docker run my-c-python-project python3 test.py'
+                    echo "Displaying Docker Logs..."
+                    sh 'docker logs $(docker ps -lq)'  // Get logs of the most recent container
                 }
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                // Push the Docker image to Docker Hub
                 script {
+                    echo "Pushing Docker image to Docker Hub..."
                     // Login to Docker Hub using credentials stored in Jenkins
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                     // Tag the image with the Docker Hub repository name
