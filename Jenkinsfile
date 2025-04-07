@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "Checking out the code from GitHub"
+                // Checkout the code from GitHub
                 checkout scm
             }
         }
@@ -17,15 +17,15 @@ pipeline {
         stage('Verify Docker Installation') {
             steps {
                 echo "Verifying Docker Installation..."
-                sh 'docker --version'
+                sh 'docker --version'  // Check Docker version to ensure Docker is installed
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker Image"
+                // Build the Docker image
                 script {
-                    // Build the Docker image
+                    echo "Building Docker image..."
                     sh 'docker build -t my-c-python-project .'
                 }
             }
@@ -33,9 +33,9 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                echo "Running Tests"
+                // Run tests inside the Docker container
                 script {
-                    // Run the container and execute tests
+                    echo "Running tests inside the Docker container..."
                     sh 'docker run my-c-python-project'
                 }
             }
@@ -43,13 +43,11 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                echo "Pushing Docker Image to Docker Hub"
+                // Push the Docker image to Docker Hub
                 script {
-                    // Login to Docker Hub using credentials stored in Jenkins
+                    echo "Pushing Docker image to Docker Hub..."
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                    // Tag the image with the Docker Hub repository name
                     sh 'docker tag my-c-python-project adminch001/my-c-python-project'
-                    // Push the image to Docker Hub
                     sh 'docker push adminch001/my-c-python-project'
                 }
             }
