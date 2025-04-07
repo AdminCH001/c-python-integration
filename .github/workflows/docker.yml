@@ -14,14 +14,10 @@ jobs:
     - name: Build Docker Image
       run: docker build -t my-c-python-project .
 
+  test_EMULATOR :
+    runs-on: ubuntu-latest
+
+    steps:
+
     - name: Run Tests
       run: docker run my-c-python-project
-
-    - name: Push to Docker Hub
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: |
-        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-        docker tag my-c-python-project adminch001/my-c-python-project
-        docker push adminch001/my-c-python-project
