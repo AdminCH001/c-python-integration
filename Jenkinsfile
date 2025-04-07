@@ -6,7 +6,18 @@ pipeline {
         DOCKER_PASSWORD = credentials('dockerhub-password') // Use Jenkins secret for Docker Hub password
     }
 
+
     stages {
+
+        stage('Check Docker') {
+            steps {
+                script {
+                    sh 'docker --version'  // Check Docker version
+                    sh 'docker info'  // Check Docker info
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub
