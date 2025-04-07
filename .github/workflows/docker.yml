@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build and Test 
 
 on:
   push:
@@ -23,5 +23,5 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-        docker tag my-c-python-project yourdockerhubusername/my-c-python-project
-        docker push yourdockerhubusername/my-c-python-project
+        docker tag my-c-python-project adminch001/my-c-python-project
+        docker push adminch001/my-c-python-project
