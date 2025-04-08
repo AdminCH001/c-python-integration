@@ -70,3 +70,11 @@ jobs:
     steps:
     - name: Run Tests
       run: docker run my-c-python-project
+
+  code_Coverage:
+    runs-on: ubuntu-latest
+    needs: test_EMULATOR  # This ensures that the test job runs after the build job.
+
+    steps:
+    - name: Run Tests
+      run: docker run my-c-python-project
